@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Segfault's Online HTML Editor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #222; /* Dark background */
+      color: #ddd; /* Light text */
+    }
+    #header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 4px solid #007bff; /* Accent color */
+    }
+    h1, h2 {
+      margin: 10px 0;
+    }
+    #editor-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+      padding: 20px;
+    }
+    #editor {
+      background-color: #333; /* Dark background */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Light shadow */
+      width: 80%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: row; /* Changed from column to row */
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    #textarea-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+      border: 1px solid #555; /* Dark border */
+      border-radius: 5px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      resize: none; /* Disable manual resize */
+      background-color: #333; /* Dark background */
+      color: #ddd; /* Light text */
+    }
+    button {
+      background-color: #007bff; /* Accent color */
+      color: #fff; /* Light text */
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3; /* Darker accent color */
+    }
+    #output-container {
+      flex: 1;
+      margin-left: 20px;
+      border-left: 1px solid #555; /* Dark border */
+      padding-left: 20px;
+    }
+    #output {
+      border: 1px solid #555; /* Dark border */
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #333; /* Dark background */
+      font-size: 16px;
+      color: #ddd; /* Light text */
+    }
+  </style>
+</head>
+<body>
+  <div id='header'>
+    <h1>Welcome to Segfault's Online HTML Editor!</h1>
+    <h2>Create and render HTML code instantly!</h2>
+    <!-- I had to block some tags to prevent XSS unfortunately :( -->
+    <!-- Please do not visit /flag to access the flag.txt! (unless you're the server of course) hehe -->
+  </div>
+  <div id='editor-container'>
+    <div id='editor'>
+      <form method="post" action="{% url 'render_html' %}">
+        <div id='textarea-container'>
+          <textarea id="html_code" name="html_code" placeholder="Enter your HTML code here...">{{ html_code }}</textarea>
+          <button id="render_button" type="submit">Render</button>
+        </div>
+      </form>
+      <div id='output-container'>
+        <div id="output">
+          {{ html_code|safe }}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
